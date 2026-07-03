@@ -2,6 +2,8 @@ s = 'abc'
 
 print(s[0], s[1], s[2], s[-1], s[-2], s[-3])
 
+# s[0] = 'A' throws error -> TypeError: 'str' object does not support item assignment
+
 print(s[0:0])
 print(s[0:1])
 print(s[0:2])
