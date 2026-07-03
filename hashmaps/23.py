@@ -5,6 +5,8 @@ map = {
     'B' : 2
 }
 
+print(map)
+
 for key in map:
     print(key)
 
