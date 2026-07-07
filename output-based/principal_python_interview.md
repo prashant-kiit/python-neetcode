@@ -1,5 +1,7 @@
 # Principal AI/ML Engineer — Python Deep-Dive Interview
+
 ### Conducted by Dario Amodei (CTO & Co-founder, Anthropic)
+
 **Format:** Output-prediction only. No theory questions. 50 questions, progressive difficulty (10% Medium / 30% Hard / 60% Extremely Hard).
 
 ---
@@ -8,7 +10,10 @@ Before we start — welcome. This interview is pure Python execution semantics. 
 
 ---
 
+
+
 ## Question 1
+
 ```python
 x = 5
 def outer():
@@ -16,6 +21,7 @@ def outer():
     return x
 print(outer())
 ```
+
 **Candidate Task:** Predict the exact output.
 
 **Answer:** Raises `UnboundLocalError: local variable 'x' referenced before assignment`.
@@ -27,7 +33,10 @@ print(outer())
 
 ---
 
+
+
 ## Question 2
+
 ```python
 def make_multipliers():
     return [lambda x: x * i for i in range(3)]
@@ -35,6 +44,7 @@ def make_multipliers():
 fns = make_multipliers()
 print([f(10) for f in fns])
 ```
+
 **Answer:** `[20, 20, 20]`
 
 **Explanation:** Closures in Python capture variables **by reference**, not by value. All three lambdas share the same cell for `i`. By the time the list comprehension finishes, `i` is `2` (the last value from `range(3)`). This is "late binding" — the lambda body doesn't evaluate `i` until it's *called*, and by then the loop has finished. Common fix: default-arg capture `lambda x, i=i: x * i`.
@@ -44,7 +54,10 @@ print([f(10) for f in fns])
 
 ---
 
+
+
 ## Question 3
+
 ```python
 def f(a, b=[]):
     b.append(a)
@@ -55,6 +68,7 @@ print(f(2))
 print(f(3, []))
 print(f(4))
 ```
+
 **Answer:** `[1]`, `[1, 2]`, `[3]`, `[1, 2, 4]`
 
 **Explanation:** Default arguments are evaluated **once**, at function-definition time, and the same list object is reused across calls unless explicitly overridden. Calls 1, 2, and 4 all mutate the same shared default list object bound to `b`. Call 3 passes a fresh list explicitly, bypassing the shared default entirely.
@@ -64,7 +78,10 @@ print(f(4))
 
 ---
 
+
+
 ## Question 4
+
 ```python
 a = 256
 b = 256
@@ -74,6 +91,7 @@ c = 257
 d = 257
 print(c is d)
 ```
+
 **Answer:** `True`, then implementation-dependent — typically `False` in a plain script but can be `True` in an interactive REPL due to peephole/constant folding differences.
 
 **Explanation:** CPython pre-caches small integers in the range **-5 to 256** as singletons (the "small int cache"). `256` will always be `is`-identical. `257` falls outside that cache, so two separately-created `257` objects are normally distinct objects — *except* CPython's peephole optimizer may fold literal constants defined in the same code object, making REPL/script behavior diverge. This is a well-known CPython implementation detail, **not part of the language spec** — Jython/PyPy behave differently.
@@ -83,7 +101,10 @@ print(c is d)
 
 ---
 
+
+
 ## Question 5
+
 ```python
 class Meta(type):
     def __new__(mcs, name, bases, ns):
@@ -100,7 +121,9 @@ class Child(Base):
 print(Child.created_by)
 print(Base.created_by)
 ```
+
 **Answer:**
+
 ```
 Creating Base
 Creating Child
@@ -115,7 +138,10 @@ Meta
 
 ---
 
+
+
 ## Question 6
+
 ```python
 class A:
     def who(self):
@@ -135,7 +161,9 @@ class D(B, C):
 print(D().who())
 print([c.__name__ for c in D.__mro__])
 ```
+
 **Answer:**
+
 ```
 B
 ['D', 'B', 'C', 'A', 'object']
@@ -148,7 +176,10 @@ B
 
 ---
 
+
+
 ## Question 7
+
 ```python
 def gen():
     print("start")
@@ -166,7 +197,9 @@ try:
 except StopIteration as e:
     print("StopIteration:", e.value)
 ```
+
 **Answer:**
+
 ```
 start
 1
@@ -183,7 +216,10 @@ StopIteration: done
 
 ---
 
+
+
 ## Question 8
+
 ```python
 class Descriptor:
     def __init__(self, name):
@@ -205,7 +241,9 @@ f.x = 10
 print(f.x)
 print(Foo.x)
 ```
+
 **Answer:**
+
 ```
 default
 setting x = 10
@@ -220,7 +258,10 @@ setting x = 10
 
 ---
 
+
+
 ## Question 9
+
 ```python
 import functools
 
@@ -235,7 +276,9 @@ print(fib.cache_info())
 fib.cache_clear()
 print(fib.cache_info())
 ```
+
 **Answer:**
+
 ```
 55
 CacheInfo(hits=8, misses=11, maxsize=None, currsize=11)
@@ -249,7 +292,10 @@ CacheInfo(hits=0, misses=0, maxsize=None, currsize=0)
 
 ---
 
+
+
 ## Question 10
+
 ```python
 class Meta(type):
     def __call__(cls, *args, **kwargs):
@@ -267,7 +313,9 @@ class Foo(metaclass=Meta):
 
 f = Foo()
 ```
+
 **Answer:**
+
 ```
 Meta.__call__
 Foo.__new__
@@ -282,7 +330,10 @@ instance created
 
 ---
 
+
+
 ## Question 11
+
 ```python
 class Node:
     __slots__ = ('value', 'next')
@@ -298,7 +349,9 @@ except AttributeError as e:
 
 print(hasattr(n, '__dict__'))
 ```
+
 **Answer:**
+
 ```
 Error: 'Node' object has no attribute 'extra'
 False
@@ -311,7 +364,10 @@ False
 
 ---
 
+
+
 ## Question 12
+
 ```python
 import asyncio
 
@@ -331,7 +387,9 @@ async def main():
 
 asyncio.run(main())
 ```
+
 **Answer:**
+
 ```
 A start
 B start
@@ -349,7 +407,10 @@ C end
 
 ---
 
+
+
 ## Question 13
+
 ```python
 class Base:
     def __init_subclass__(cls, **kwargs):
@@ -359,7 +420,9 @@ class Base:
 class Sub(Base, extra="hello"):
     pass
 ```
+
 **Answer:**
+
 ```
 Subclassing Sub with {'extra': 'hello'}
 ```
@@ -371,7 +434,10 @@ Subclassing Sub with {'extra': 'hello'}
 
 ---
 
+
+
 ## Question 14
+
 ```python
 import threading
 
@@ -387,6 +453,7 @@ for t in threads: t.start()
 for t in threads: t.join()
 print(counter)
 ```
+
 **Answer:** Some value **less than or equal to 400000**, non-deterministic (e.g. `387452`), almost never exactly `400000`.
 
 **Explanation:** Despite the GIL, `counter += 1` is **not atomic** — it compiles to a `LOAD_GLOBAL`, `BINARY_ADD`, `STORE_GLOBAL` sequence, and the GIL can switch threads between bytecode instructions (governed by the interpreter's switch interval). Multiple threads can read the same stale value before writing back, causing lost updates — a classic race condition that surprises engineers who assume "the GIL makes things thread-safe."
@@ -396,7 +463,10 @@ print(counter)
 
 ---
 
+
+
 ## Question 15
+
 ```python
 def outer():
     x = 10
@@ -411,6 +481,7 @@ def outer():
 
 print(outer())
 ```
+
 **Answer:** `(15, 105)`
 
 **Explanation:** `nonlocal x` binds `inner`'s `x` to the same cell as `outer`'s `x` — they share one cell object, not a copy. `inner()` first call: `10 + 5 = 15`, and `outer`'s `x` becomes `15`. Then `outer` reassigns `x = 100` (same cell, now `100`). Second `inner()` call reads that updated cell: `100 + 5 = 105`. This demonstrates closures over mutable shared cells rather than value-capture.
@@ -420,7 +491,10 @@ print(outer())
 
 ---
 
+
+
 ## Question 16
+
 ```python
 class Meta(type):
     def __new__(mcs, name, bases, ns):
@@ -437,7 +511,9 @@ print(Tool.run(5))
 t = Tool()
 print(t.run(5))
 ```
+
 **Answer:**
+
 ```
 10
 10
@@ -450,7 +526,10 @@ print(t.run(5))
 
 ---
 
+
+
 ## Question 17
+
 ```python
 try:
     try:
@@ -462,7 +541,9 @@ except TypeError as e:
     print("caught:", e)
     print("cause:", e.__context__)
 ```
+
 **Answer:**
+
 ```
 finally 1
 caught: from finally
@@ -476,7 +557,10 @@ cause: inner
 
 ---
 
+
+
 ## Question 18
+
 ```python
 class ContextMgr:
     def __enter__(self):
@@ -492,7 +576,9 @@ with ContextMgr():
 
 print("after")
 ```
+
 **Answer:**
+
 ```
 enter
 body
@@ -507,7 +593,10 @@ after
 
 ---
 
+
+
 ## Question 19
+
 ```python
 class A:
     x = []
@@ -524,7 +613,9 @@ print(a1.x is a2.x)
 a1.x = [99]
 print(a1.x, a2.x)
 ```
+
 **Answer:**
+
 ```
 [1, 2] [1, 2]
 True
@@ -538,7 +629,10 @@ True
 
 ---
 
+
+
 ## Question 20
+
 ```python
 import copy
 
@@ -557,7 +651,9 @@ print(b1.items)
 print(b2.items)
 print(b3.items)
 ```
+
 **Answer:**
+
 ```
 [1, [2, 3, 99], 4, 100]
 [1, [2, 3, 99], 4]
@@ -571,7 +667,10 @@ print(b3.items)
 
 ---
 
+
+
 ## Question 21
+
 ```python
 def decorator(func):
     count = 0
@@ -592,7 +691,9 @@ greet("Bob")
 print(greet.get_count())
 print(greet.__name__)
 ```
+
 **Answer:**
+
 ```
 Call #1 to greet
 Call #2 to greet
@@ -607,7 +708,10 @@ wrapper
 
 ---
 
+
+
 ## Question 22
+
 ```python
 from abc import ABC, abstractmethod
 
@@ -628,10 +732,13 @@ try:
 except TypeError as e:
     print("Error:", e)
 ```
+
 **Answer:**
+
 ```
 Error: Can't instantiate abstract class Circle with abstract method area
 ```
+
 *(Exact wording varies slightly by Python version, e.g. 3.12 says "without an implementation for abstract method 'area'".)*
 
 **Explanation:** `Circle` inherits from `Shape` but never overrides `area`, so it still carries the abstract method in `Circle.__abstractmethods__`. `ABCMeta.__call__` checks this set before allowing instantiation and raises `TypeError` — enforcement happens at **instantiation time**, not class-definition time, meaning defining `Circle` itself is perfectly legal.
@@ -641,7 +748,10 @@ Error: Can't instantiate abstract class Circle with abstract method area
 
 ---
 
+
+
 ## Question 23
+
 ```python
 class Vector:
     def __init__(self, x, y):
@@ -659,6 +769,7 @@ print(v1 == v2)
 print(v1 is v2)
 print({v1, v2})
 ```
+
 **Answer:** `True`, `False`, then raises `TypeError: unhashable type: 'Vector'`.
 
 **Explanation:** `v1 == v2` is `True` via the custom `__eq__`. `v1 is v2` is `False` — distinct objects. The trap: defining `__eq__` without also defining `__hash__` causes Python to set `__hash__` to `None` automatically (per the data model — a class that overrides `__eq__` becomes unhashable unless `__hash__` is explicitly restored), so attempting to put instances into a `set` raises `TypeError` immediately.
@@ -668,7 +779,10 @@ print({v1, v2})
 
 ---
 
+
+
 ## Question 24
+
 ```python
 import sys
 
@@ -682,6 +796,7 @@ show()
 del ref2
 show()
 ```
+
 **Answer:** Three increasing-then-decreasing integers, e.g. `2`, `3`, `2` (exact numbers vary by call context, but the pattern — increase then decrease by 1 — is guaranteed).
 
 **Explanation:** `sys.getrefcount` itself introduces one temporary extra reference (the argument binding inside the function call), so absolute numbers are always inflated by at least 1 relative to naive expectation. Creating `ref2 = obj` increments the true refcount by one; `del ref2` decrements it back. This demonstrates CPython's **reference counting** garbage collection mechanism directly, and the trap is candidates forgetting that the measurement function itself perturbs the count.
@@ -691,7 +806,10 @@ show()
 
 ---
 
+
+
 ## Question 25
+
 ```python
 class Singleton:
     _instance = None
@@ -709,7 +827,9 @@ s2 = Singleton(2)
 print(s1 is s2)
 print(s1.value, s2.value)
 ```
+
 **Answer:**
+
 ```
 creating instance
 init called with 1
@@ -725,7 +845,10 @@ True
 
 ---
 
+
+
 ## Question 26
+
 ```python
 d = {}
 d[1] = 'int one'
@@ -734,7 +857,9 @@ d[True] = 'bool true'
 print(d)
 print(len(d))
 ```
+
 **Answer:**
+
 ```
 {1: 'bool true'}
 1
@@ -747,7 +872,10 @@ print(len(d))
 
 ---
 
+
+
 ## Question 27
+
 ```python
 def process():
     with open('nonexistent_file_xyz.txt') as f:
@@ -761,7 +889,9 @@ except FileNotFoundError as e:
 finally:
     print("cleanup")
 ```
+
 **Answer:**
+
 ```
 FileNotFoundError 2
 cleanup
@@ -774,7 +904,10 @@ cleanup
 
 ---
 
+
+
 ## Question 28
+
 ```python
 class LazyProperty:
     def __init__(self, func):
@@ -798,7 +931,9 @@ print(d.expensive)
 print(d.expensive)
 print(d.__dict__)
 ```
+
 **Answer:**
+
 ```
 computing...
 42
@@ -813,7 +948,10 @@ computing...
 
 ---
 
+
+
 ## Question 29
+
 ```python
 import re
 
@@ -825,7 +963,9 @@ print(matches)
 for m in pattern.finditer(text):
     print(m.group(0), m.start(), m.end())
 ```
+
 **Answer:**
+
 ```
 [('alice', 'example', 'com'), ('bob', 'test', 'org')]
 alice@example.com 10 28
@@ -839,7 +979,10 @@ bob@test.org 32 44
 
 ---
 
+
+
 ## Question 30
+
 ```python
 class EventBus:
     _handlers = {}
@@ -857,7 +1000,9 @@ class HoverHandler(EventBus, event="hover"):
 print(EventBus._handlers)
 print(ClickHandler._handlers is HoverHandler._handlers)
 ```
+
 **Answer:**
+
 ```
 {'click': <class '__main__.ClickHandler'>, 'hover': <class '__main__.HoverHandler'>}
 True
@@ -870,7 +1015,10 @@ True
 
 ---
 
+
+
 ## Question 31
+
 ```python
 async def gen():
     for i in range(3):
@@ -889,7 +1037,9 @@ async def main():
 import asyncio
 asyncio.run(main())
 ```
+
 **Answer:**
+
 ```
 [0, 1, 2]
 0
@@ -903,7 +1053,10 @@ asyncio.run(main())
 
 ---
 
+
+
 ## Question 32
+
 ```python
 class Base:
     def __repr__(self):
@@ -922,7 +1075,9 @@ p = Proxy(Base())
 print(p.method())
 print(p._target)
 ```
+
 **Answer:**
+
 ```
 proxying method
 Base
@@ -936,7 +1091,10 @@ Base
 
 ---
 
+
+
 ## Question 33
+
 ```python
 def counter():
     i = 0
@@ -959,7 +1117,9 @@ try:
 except StopIteration:
     print("generator closed")
 ```
+
 **Answer:**
+
 ```
 0
 1
@@ -976,7 +1136,10 @@ generator closed
 
 ---
 
+
+
 ## Question 34
+
 ```python
 import multiprocessing as mp
 
@@ -990,6 +1153,7 @@ if __name__ == "__main__":
     for p in processes: p.join()
     print(normal_list)
 ```
+
 **Answer:** `[1, 2, 3]` (unchanged)
 
 **Explanation:** Unlike threading, `multiprocessing.Process` forks (or spawns) **separate processes** with independent memory spaces. `normal_list` is a plain Python `list`, not a multiprocessing-aware shared object (`mp.Manager().list()` or shared memory would be needed). Each child process receives a **copy** (via pickling, on spawn platforms) of `normal_list`, mutates its own copy, and that mutation never propagates back to the parent's `normal_list`. This is one of the most common production bugs when engineers assume multiprocessing shares state like threading does.
@@ -999,7 +1163,10 @@ if __name__ == "__main__":
 
 ---
 
+
+
 ## Question 35
+
 ```python
 class Temperature:
     def __init__(self, celsius=0):
@@ -1033,7 +1200,9 @@ except ValueError as e:
     print("caught:", e)
 print(t.celsius)
 ```
+
 **Answer:**
+
 ```
 77.0
 0.0
@@ -1048,7 +1217,10 @@ caught: Below absolute zero
 
 ---
 
+
+
 ## Question 36
+
 ```python
 class A:
     def __enter__(self):
@@ -1071,7 +1243,9 @@ try:
 except RuntimeError as e:
     print("caught:", e)
 ```
+
 **Answer:**
+
 ```
 A enter
 B enter
@@ -1086,7 +1260,10 @@ caught: B failed
 
 ---
 
+
+
 ## Question 37
+
 ```python
 x = [1, 2, 3]
 y = x
@@ -1096,7 +1273,9 @@ print(x, y, x is y)
 x = x + [6]
 print(x, y, x is y)
 ```
+
 **Answer:**
+
 ```
 [1, 2, 3, 4, 5] [1, 2, 3, 4, 5] True
 [1, 2, 3, 4, 5, 6] [1, 2, 3, 4, 5] False
@@ -1109,7 +1288,10 @@ print(x, y, x is y)
 
 ---
 
+
+
 ## Question 38
+
 ```python
 import sys
 
@@ -1127,7 +1309,9 @@ except RecursionError as e:
 sys.setrecursionlimit(1000)
 print(recurse(100))
 ```
+
 **Answer:**
+
 ```
 1000
 caught: RecursionError
@@ -1141,7 +1325,10 @@ caught: RecursionError
 
 ---
 
+
+
 ## Question 39
+
 ```python
 class Meta(type):
     instances = {}
@@ -1163,7 +1350,9 @@ c2 = Connection("db1")
 c3 = Connection("db2")
 print(c1 is c2, c1 is c3)
 ```
+
 **Answer:**
+
 ```
 new instance for ('db1',)
 reusing instance for ('db1',)
@@ -1178,7 +1367,10 @@ True False
 
 ---
 
+
+
 ## Question 40
+
 ```python
 class Base:
     def template(self):
@@ -1206,7 +1398,9 @@ class Incomplete(Base):
 print(Child().template())
 print(Incomplete().template())
 ```
+
 **Answer:**
+
 ```
 base setup
 child setup
@@ -1222,7 +1416,10 @@ fallback
 
 ---
 
+
+
 ## Question 41
+
 ```python
 from collections import defaultdict, OrderedDict, Counter
 
@@ -1241,7 +1438,9 @@ od['a'] = 2
 od.move_to_end('b')
 print(list(od.keys()))
 ```
+
 **Answer:**
+
 ```
 {'a': {'x': 1, 'y': 2}, 'b': {'x': 5}}
 [('i', 4), ('s', 4)]
@@ -1255,7 +1454,10 @@ print(list(od.keys()))
 
 ---
 
+
+
 ## Question 42
+
 ```python
 class Observable:
     def __set_name__(self, owner, name):
@@ -1279,7 +1481,9 @@ m.status = "pending"
 m.status = "done"
 print(m.status)
 ```
+
 **Answer:**
+
 ```
 status changed: None -> pending
 status changed: pending -> done
@@ -1293,7 +1497,10 @@ done
 
 ---
 
+
+
 ## Question 43
+
 ```python
 import weakref
 
@@ -1309,11 +1516,15 @@ print(weak() is r)
 del r
 print(weak())
 ```
+
 **Answer:**
+
 ```
 deleting... 
 ```
+
 Actually precise order:
+
 ```
 True
 deleting R1
@@ -1327,7 +1538,10 @@ None
 
 ---
 
+
+
 ## Question 44
+
 ```python
 def apply_decorators(*decorators):
     def wrapper(func):
@@ -1352,6 +1566,7 @@ def text():
 
 print(text())
 ```
+
 **Answer:** `<b><i>hi</i></b>`
 
 **Explanation:** `@apply_decorators(bold, italic)` is equivalent to `text = apply_decorators(bold, italic)(text)`. Inside `wrapper`, iterating `reversed((bold, italic))` applies `italic` **first** (innermost), then `bold` (outermost) — so evaluation order is `bold(italic(text))`. Calling the final composed function wraps the innermost `<i>hi</i>` output with `<b>...</b>`, matching standard decorator-stacking semantics where the decorator closest to the function runs first, even though here it's programmatically composed rather than stacked with `@` syntax.
@@ -1361,7 +1576,10 @@ print(text())
 
 ---
 
+
+
 ## Question 45
+
 ```python
 class RangeLike:
     def __init__(self, n):
@@ -1379,7 +1597,9 @@ for x in r:
         break
     print(x, end=" ")
 ```
+
 **Answer:**
+
 ```
 [0, 1, 4, 9, 16]
 False
@@ -1393,7 +1613,10 @@ False
 
 ---
 
+
+
 ## Question 46
+
 ```python
 import sys
 
@@ -1414,11 +1637,14 @@ print(m1 is m2)
 del sys.modules['modA']
 import modA as m3
 ```
+
 **Answer:**
+
 ```
 100
 True
 ```
+
 then raises `ModuleNotFoundError: No module named 'modA'` at the final `import modA as m3`.
 
 **Explanation:** `sys.modules` is the process-wide **module cache** — once `'modA'` is registered there, every subsequent `import modA` statement returns the exact same cached module object rather than re-executing/re-locating it, so `m1 is m2` is `True` and mutations via one alias are visible via the other. Removing the entry from `sys.modules` doesn't destroy the module object per se, but it does force the import system to re-resolve `'modA'` from scratch — and since it was never a real file on disk (only synthetically injected), the subsequent `import modA as m3` fails with `ModuleNotFoundError`.
@@ -1428,7 +1654,10 @@ then raises `ModuleNotFoundError: No module named 'modA'` at the final `import m
 
 ---
 
+
+
 ## Question 47
+
 ```python
 class A:
     def __eq__(self, other):
@@ -1445,7 +1674,9 @@ b = B()
 print(a == b)
 print(b == a)
 ```
+
 **Answer:**
+
 ```
 A.__eq__
 B.__eq__
@@ -1461,7 +1692,10 @@ True
 
 ---
 
+
+
 ## Question 48
+
 ```python
 async def fetch(n):
     if n == 2:
@@ -1482,7 +1716,9 @@ async def main():
 import asyncio
 asyncio.run(main())
 ```
+
 **Answer:**
+
 ```
 [0, 10, 'error: failed on 2', 30]
 ```
@@ -1494,7 +1730,10 @@ asyncio.run(main())
 
 ---
 
+
+
 ## Question 49
+
 ```python
 class Meta(type):
     def __prepare__(name, bases, **kwargs):
@@ -1508,7 +1747,9 @@ class Foo(metaclass=Meta):
 print(Foo.injected)
 print(hasattr(Foo, 'injected'))
 ```
+
 **Answer:**
+
 ```
 preparing namespace
 42
@@ -1523,7 +1764,10 @@ True
 
 ---
 
+
+
 ## Question 50
+
 ```python
 import gc
 
@@ -1548,14 +1792,17 @@ gc.collect()
 print("after manual collect")
 gc.enable()
 ```
+
 **Answer:**
+
 ```
 after make_cycle, no output above
 deleted A
 deleted B
 after manual collect
 ```
-*(Order of "deleted A"/"deleted B" between the two is not strictly guaranteed but both occur only during `gc.collect()`.)*
+
+*(Order of "deleted A"/"deleted B" between the two is not strictly guaranteed but both occur only during* `gc.collect()`*.)*
 
 **Explanation:** `a` and `b` form a **reference cycle** (`a.ref -> b`, `b.ref -> a`), so their reference counts never drop to zero purely from `make_cycle` returning — pure refcounting *cannot* collect cycles. With `gc.disable()`, the cyclic garbage collector's automatic periodic sweep is turned off, so the cycle leaks indefinitely until `gc.collect()` is called explicitly, which walks the object graph, detects the unreachable cycle, and finalizes both objects — hence both `__del__` prints appear only after the explicit `gc.collect()` call, not immediately after `make_cycle()` returns.
 
@@ -1563,6 +1810,8 @@ after manual collect
 **Topics Tested:** Reference counting vs cyclic garbage collector, `gc.collect()`, reference cycles, `__del__` finalization timing under cycles
 
 ---
+
+
 
 ## Interview Wrap-Up
 
@@ -1573,6 +1822,7 @@ That's the full 50. A few notes on how I'd actually run this in a real loop:
 - **Questions 31–50** are deliberately brutal — async scheduling internals, `sys.modules` cache manipulation, `__prepare__`, and cyclic GC are things I'd expect maybe 1 in 5 senior candidates to nail cleanly. Getting 60%+ of these right, with correct reasoning (not just correct output), is a strong signal for the kind of Python fluency we need building inference infrastructure, tooling, and research systems at this level.
 
 **Scoring guide I use internally:**
+
 - 40+/50 correct with clean reasoning → Strong hire signal on Python fundamentals
 - 30–39/50 → Proceed to systems/infra round, some gaps to probe
 - <30/50 → Likely not at principal-level Python depth yet
