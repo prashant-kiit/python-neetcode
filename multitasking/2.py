@@ -18,6 +18,21 @@ t2.join()
 
 print("Done")
 
+# from concurrent.futures import ThreadPoolExecutor
+# import time
+
+# def work(i):
+#     print(f"Starting {i}")
+#     time.sleep(2)
+#     print(f"Finished {i}")
+#     return i * i
+
+# with ThreadPoolExecutor(max_workers=3) as executor:
+#     futures = [executor.submit(work, i) for i in range(6)]
+
+#     for future in futures:
+#         print(future.result())
+
 # Key points on multithreading
 # Shared memory — threads share the same variables/objects (no IPC needed), but this means you need locks to avoid race conditions.
 # GIL bottleneck — for CPU-bound tasks, threads don't give real parallelism (they take turns, GIL released/acquired constantly). No speedup, sometimes even slower due to context-switch overhead.
