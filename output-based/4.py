@@ -28,7 +28,7 @@ k = "hello"
 l_ = "hello"
 print(k is l_)
 
-# Small Int Caching (Data Pool Pre-caching at Compiled Time) and Data Pooling at Run time
+# No Optimization b/c more than 256, no constant and no pooling
 m = int('123')
 n = int('123')
 o = 123
