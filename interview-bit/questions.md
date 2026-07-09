@@ -18,7 +18,7 @@
 18. What is Lambda Functions? What are Pure functions? What is Co Runtines in Single threaded Async Non-Blocking? What is Event Loop and Queue? What are Aysnc/Await, Promise & then() and Callback hell? What are Function Currying? What are Closures? What are Context & Scope Bindings?
 19. How do you copy an object in Python? What are Shallow and Deepy Copy? What of copy of head address, copy of head address + item address, copy of head address + item value without recursion and copy of head address + item value with recursion (These are stages of deeper object copy)?
 20. What is Serialization and Deserialization? What is pickling and unpickling? What is use of Serialization/Deserialization?
-21. What are range, iterator and generator? How are they different? Are they data types? Are they lazy? Is range repeatable but iterator and generator are not? Is range a list other are not? Is range indexed but others are not?
+21. What are range, iterator and generator? How are they different? Are they data types? Are they lazy? Is range repeatable but iterator and generator are not? Is range a list other are not? Is range indexed but others are not? How to build a coroutine using generators?
 22. How are arguments passed by value or by reference in python?
 
 
