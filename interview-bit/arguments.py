@@ -30,4 +30,6 @@ logging.critical("Critical")
 
 result = subprocess.run(["ls", "-al"], capture_output=True, text=True)
 print(result.stdout)
-print(result.returncode)
+print(exit_code:= result.returncode)
+
+sys.exit(1 if not exit_code else 0)
