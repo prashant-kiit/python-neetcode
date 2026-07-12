@@ -1,8 +1,8 @@
 # Questions Interview Bit
 1. What are compiled and interpreted languages? What is the difference between .py and .pyc files?
 2. What are static and dynamic typing in progamming?
-3. What is PEP? What is PEP 8? What is PYTHONPATH in Python?
-4. What is Context, Namespace and Scope?
+3. What is PEP? What is PEP 8? What is PYTHONPATH in Python? Define GIL. Define PIP.
+4. What is Context, Namespace and Scope? What is the purpose of a shebang (#!/usr/bin/env python3)?
 5. What are bytes, bytesarray, lists, strings, tuples, ranges, deque, heap, sets, dictionary? What are in the underlying data stucture of these? Also, what are none, bool, int, float, complex data types?
 6. What are mutable and immutable data type? What is data pooling, small int pre-caching and constand folding? What are id() and hash()? What does == and 'is' mean in python?
 7. What is break, continue and pass in Python?
@@ -18,8 +18,37 @@
 18. What is Lambda Functions? What are Pure functions? What is Co Runtines in Single threaded Async Non-Blocking? What is Event Loop and Queue? What are Aysnc/Await, Promise & then() and Callback hell? What are Function Currying? What are Closures? What are Context & Scope Bindings?
 19. How do you copy an object in Python? What are Shallow and Deepy Copy? What of copy of head address, copy of head address + item address, copy of head address + item value without recursion and copy of head address + item value with recursion (These are stages of deeper object copy)?
 20. What is Serialization and Deserialization? What is pickling and unpickling? What is use of Serialization/Deserialization?
-21. What are range, iterator and generator? How are they different? Are they data types? Are they lazy? Is range repeatable but iterator and generator are not? Is range a list other are not? Is range indexed but others are not? How to build a coroutine using generators?
+21. What are range, iterator and generator? How are they different? Are they data types? Are they lazy? Is range repeatable but iterator and generator are not? Is range a list other are not? Is range indexed but others are not? How to build a coroutine using generators? Is generator is a special kind of iterator 
 22. How are arguments passed by value or by reference in python?
+23. How do you create a class in Python? How is an empty class created in python? What is the difference between new() and init()?
+24. How does inheritance work in python? Explain it with an example? How do you access parent members in the child class? Using self or super ? MRO (Method Resolution Order)"? Is it possible to call parent class without its instance creation? Differentiate between new and override modifiers. Are access specifiers used in python? What are descriptors in Python (in simple terms)?
+25. How will you check if a class is a child of another class? Using issubclass?
+26. How can you generate random numbers?
+27. Can you easily check if all characters in the given string is alphanumeric? Similarly other checking?
+28. What is a context manager in Python?
+29. What does “duck typing” or Structural Typing mean in real projects? What is Nominal Typing? Give exmaples.
+30. When do you use multiprocessing vs multithreading? What is async / await used for? (and when not to use it)? What are slots and why can they improve performance? Does Slots make object access faster?
+31. How python Script is done? How do you read command-line arguments in Python? What is the difference between sys.argv and argparse? How do you handle environment variables in Python scripts? How do you run another command/program from a Python script? How do you handle logging in scripts (instead of print)? How do you handle script exit codes properly?
+32. What are some memory mgm. tricks in python? What happens with list = [[0]] * 3 and why is it tricky? Why can x = x + [1] behave differently than x += [1]? What is late binding in Python closures (lambda in loops issue)?
+What is the difference between dict.get() and indexing dict[key]? Is this true "Using dict[key] throws an error if the key is missing, while dict.get(key) returns None or a default value, this is useful when you are not sure if a key exists, so get() is safer in scripts, while indexing is good when the key must be present."?
+33. What is the output of chained comparisons like a < b < c? Is this true "a < b > c also works and means a < b and b > c."
+34. What is try, except and finally? Why does finally sometimes override a return?
+35. Difference:
+nums = [1, 2, 3, 4]
+for n in nums:
+    if n % 2 == 0:
+        nums.remove(n)
+print(nums)  # [1, 3] but logic is broken for bigger cases
+
+nums = [1, 2, 3, 4]
+for n in nums[:]:
+    if n % 2 == 0:
+        nums.remove(n)
+print(nums)  # [1, 3]
+36. Why is finalize used?
+
+
+
 
 
 
