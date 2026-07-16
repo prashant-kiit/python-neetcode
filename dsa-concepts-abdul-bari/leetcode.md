@@ -1,4 +1,4 @@
-Divide and Conquer Approach
+Divide and Conquer Approach (Sort, Stack, Heaps)
 Loop
 Recursion
 Nested Loops
@@ -22,5 +22,6 @@ Divide and Conquer Approach -> Greedy Approach -> Select the Unit or Whole to Fi
 Tree, Graph -> Path Based Problems
 - DPS 
 - BFS
+
 Backtracking
 
