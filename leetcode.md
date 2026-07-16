@@ -12,3 +12,4 @@ Sliding Window
 Path based Problems
 DPS BFS
 Backtracking
+Greedy Method
