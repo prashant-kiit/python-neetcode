@@ -1,10 +1,12 @@
+import sys
+
 # -------------------------------
 # 1. Creation
 # -------------------------------
 
 r = range(5)                    # range (lazy sequence)
-it = iter(r)                    # iterator
-g = (x*x for x in range(5))      # generator
+it = iter(r)                    # iterator (laxy sequence)
+g = (x*x for x in range(5))      # generator (laxy sequence)
 
 
 # -------------------------------
@@ -123,8 +125,6 @@ print((x for x in range(5)) == (x for x in range(5)))  # False
 # -------------------------------
 # 11. Memory
 # -------------------------------
-
-import sys
 
 r = range(10_000_000)
 g = (x for x in range(10_000_000))
