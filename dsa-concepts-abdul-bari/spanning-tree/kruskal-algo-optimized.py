@@ -12,7 +12,7 @@ class DisjointSet:
         return self.parent[x]
 
     """
-    union(x, y) checks if vertices x and y belong to same subset or not ie. is_same_subset(x, y)
+    union(x, y) checks if vertices x and y belong to diff subset or not ie. is_diff_subset(x, y)
     """
     def union(self, x, y):
         rootX = self.find(x)
