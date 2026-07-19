@@ -1,8 +1,3 @@
-from typing import Any
-
-
-from collections import deque
-
 person = {
     "name": "Prashant",
     "location": "Bangalore"
