@@ -1,4 +1,4 @@
-class DisJointSet():
+class DisJointSet:
     def __init__(self, n):
         self.vertice_root_map = list(range(n))
     
