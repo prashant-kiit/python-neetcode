@@ -42,7 +42,9 @@ def kruskal(n, edges):
 
     return mst, total_cost
 
-n = 4
+# no of vertices
+n = 4 
+# edge connections and their weights
 edges = [
     (0, 1, 10),
     (0, 2, 6),
@@ -50,6 +52,19 @@ edges = [
     (1, 3, 15),
     (2, 3, 4)
 ]
+
+"""
+      10
+  0 ------- 1
+  |\        |
+6 | \5      |15
+  |  \      |
+  |   \     |
+  2----3
+     4
+
+"""
+
 
 mst, total_cost = kruskal(n, edges)
 
