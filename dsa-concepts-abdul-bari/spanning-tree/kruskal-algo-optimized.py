@@ -76,3 +76,7 @@ mst, cost = kruskal(n, edges)
 
 print("MST:", mst)
 print("Total Cost:", cost)
+
+# tc - O(eloge)
+# sc - O(v)
+# e means no of edges and c means no of vertices

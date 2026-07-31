@@ -21,3 +21,6 @@ def max_profit(profits, weights, capacity):
     return max_profit_value
 
 print(max_profit(profit, weights, capacity))
+
+# tc - O(n)
+# sc - O(1)
