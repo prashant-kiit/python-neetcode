@@ -22,7 +22,9 @@
 20. Write a Python function to flatten a nested list.
 21. How can you implement a binary search in Python?
 22. Write a program to check for an anagram.
+
 23. How do you find the longest common prefix in a list of strings?
+
 24. How do you use Python’s match-case statement introduced in modern Python versions?
 25. How do you implement a stack using a list?
 26. How can you use dataclass in Python to simplify class creation?
