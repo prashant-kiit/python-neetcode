@@ -359,13 +359,6 @@ False
 
 **Explanation:** `__slots__` suppresses the automatic creation of a per-instance `__dict__`, replacing attribute storage with fixed descriptor-backed slots for memory efficiency. Assigning an undeclared attribute raises `AttributeError` at assignment time, and `hasattr(n, '__dict__')` is `False` since no dict was ever allocated — a key production optimization for large object counts (e.g., token/node graphs).
 
-Topics/Hinys:
-1. CPU -> VM
-2. L0 -> Compiler/Interpreter -> VM -> L0 -> Compiler/Interpreter -> L1 -> CPU -> L1 -> Circuit -> Electric Signals
-3. CPU = One Object with multiple Core
-4. VM = One Object with multiple Core
-5. CPU or VM = One Core -> Concurrency; Multiple Core -> Parallelism
-
 **Difficulty:** Hard — **Success rate:** ~55%
 **Topics Tested:** `__slots__`, memory optimization, attribute storage internals
 
@@ -464,6 +457,13 @@ print(counter)
 **Answer:** Some value **less than or equal to 400000**, non-deterministic (e.g. `387452`), almost never exactly `400000`.
 
 **Explanation:** Despite the GIL, `counter += 1` is **not atomic** — it compiles to a `LOAD_GLOBAL`, `BINARY_ADD`, `STORE_GLOBAL` sequence, and the GIL can switch threads between bytecode instructions (governed by the interpreter's switch interval). Multiple threads can read the same stale value before writing back, causing lost updates — a classic race condition that surprises engineers who assume "the GIL makes things thread-safe."
+
+Topics/Hints:
+1. CPU -> VM
+2. L0 -> Compiler/Interpreter -> VM -> L0 -> Compiler/Interpreter -> L1 -> CPU -> L1 -> Circuit -> Electric Signals
+3. CPU = One Object with multiple Core
+4. VM = One Object with multiple Core
+5. CPU or VM = One Core -> Concurrency; Multiple Core -> Parallelism
 
 **Difficulty:** Very Hard — **Success rate:** ~40%
 **Topics Tested:** GIL implications, thread safety, race conditions, bytecode-level atomicity
